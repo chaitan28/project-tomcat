@@ -1,7 +1,7 @@
 variable "aws_region" {
   description = "The AWS region to launch instances in"
   type        = string
-  default     = "ap-south-1"
+  default     = "us-east-2"
 }
 
 variable "instance_type" {
@@ -19,7 +19,7 @@ variable "ami_id" {
 variable "key_name" {
   description = "SSH key pair name"
   type        = string
-  default     = "aws2-ap-south"
+  default     = "us-east-2"
 }
 
 variable "tomcat_instances" {

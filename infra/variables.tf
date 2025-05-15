@@ -27,3 +27,16 @@ variable "tomcat_instances" {
   type        = list(string)
   default     = ["dev", "qa", "staging", "prod"]
 }
+
+
+variable "vpc_id" {
+  description = "ID of the existing VPC"
+  type        = string
+  default     = "vpc-09861d007539d1b62"
+}
+
+variable "subnet_id" {
+  description = "ID of the public subnet in the VPC"
+  type        = string
+  default     = "subnet-0fdea6c79a96d0a03"
+}

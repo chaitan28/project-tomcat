@@ -7,19 +7,19 @@ variable "aws_region" {
 variable "instance_type" {
   description = "EC2 instance type"
   type        = string
-  default     = "t2.micro"
+  default     = "t2.small"
 }
 
 variable "ami_id" {
   description = "AMI ID for Ubuntu 22.04 in us-east-1"
   type        = string
-  default     = "ami-04f167a56786e4b09"  # Update for your region if needed
+  default     = "ami-0e35ddab05955cf57"  # Update for your region if needed
 }
 
 variable "key_name" {
   description = "SSH key pair name"
   type        = string
-  default     = "us-east-2"
+  default     = "aws2-ap-south"
 }
 
 variable "tomcat_instances" {
@@ -32,11 +32,11 @@ variable "tomcat_instances" {
 variable "vpc_id" {
   description = "ID of the existing VPC"
   type        = string
-  default     = "vpc-07db7ee9f223651df"
+  default     = "vpc-09861d007539d1b62"
 }
 
 variable "subnet_id" {
   description = "ID of the public subnet in the VPC"
   type        = string
-  default     = "subnet-0579ae2295406b669"
+  default     = "subnet-0fdea6c79a96d0a03"
 }

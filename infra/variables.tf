@@ -7,7 +7,7 @@ variable "aws_region" {
 variable "instance_type" {
   description = "EC2 instance type"
   type        = string
-  default     = "t2.small"
+  default     = "t2.micro"
 }
 
 variable "ami_id" {
@@ -38,5 +38,5 @@ variable "vpc_id" {
 variable "subnet_id" {
   description = "ID of the public subnet in the VPC"
   type        = string
-  default     = "subnet-02086821d2c4abed0"
+  default     = "subnet-0579ae2295406b669"
 }

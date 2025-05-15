@@ -1,31 +1,58 @@
 #!/bin/bash
-sudo apt update -y
-sudo apt install default-jdk -y
 
+set -e
+
+# Update system
+sudo apt-get update -y
+sudo apt-get upgrade -y
+
+# Install Java
+sudo apt install openjdk-21-jdk -y
+
+# Define variables
+TOMCAT_VERSION="9.0.105"
+TOMCAT_DIR="/opt/tomcat"
+
+# Download and install Tomcat
 cd /opt
-wget https://downloads.apache.org/tomcat/tomcat-9/v9.0.85/bin/apache-tomcat-9.0.85.tar.gz
-tar -xvzf apache-tomcat-9.0.85.tar.gz
-mv apache-tomcat-9.0.85 tomcat
-chmod -R 755 /opt/tomcat
+sudo wget https://downloads.apache.org/tomcat/tomcat-9/v${TOMCAT_VERSION}/bin/apache-tomcat-${TOMCAT_VERSION}.tar.gz
+sudo tar -xvzf apache-tomcat-${TOMCAT_VERSION}.tar.gz
+sudo mv apache-tomcat-${TOMCAT_VERSION} ${TOMCAT_DIR}
+sudo rm -f apache-tomcat-${TOMCAT_VERSION}.tar.gz
+sudo chmod -R 755 ${TOMCAT_DIR}
 
-cat <<EOF | sudo tee /etc/systemd/system/tomcat.service
+# Create systemd service
+sudo tee /etc/systemd/system/tomcat.service > /dev/null <<EOF
 [Unit]
-Description=Apache Tomcat
+Description=Apache Tomcat Web Application Container
 After=network.target
 
 [Service]
-Type=forking
+Type=oneshot
+
+Environment=JAVA_HOME=/usr/lib/jvm/java-1.21.0-openjdk-amd64        #make sure this is correct
+Environment=CATALINA_PID=/opt/tomcat/temp/tomcat.pid
+Environment=CATALINA_HOME=/opt/tomcat
+Environment=CATALINA_BASE=/opt/tomcat
+Environment='CATALINA_OPTS=-Xms512M -Xmx1024M -server -XX:+UseParallelGC'
+Environment='JAVA_OPTS=-Djava.awt.headless=true -Djava.security.egd=file:/dev/./urandom'
 ExecStart=/opt/tomcat/bin/startup.sh
 ExecStop=/opt/tomcat/bin/shutdown.sh
-User=ubuntu
-Group=ubuntu
-Restart=always
+
+User=root
+Group=root
+UMask=0007
+RestartSec=10
+RemainAfterExit=yes
 
 [Install]
 WantedBy=multi-user.target
 EOF
 
-systemctl daemon-reexec
-systemctl daemon-reload
-systemctl enable tomcat
-systemctl start tomcat
+# Reload systemd and start Tomcat
+sudo systemctl daemon-reload
+sudo systemctl enable tomcat
+sudo systemctl start tomcat
+
+# Log status
+sudo systemctl status tomcat

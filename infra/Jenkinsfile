@@ -1,0 +1,28 @@
+pipeline {
+    agent any
+    parameters {
+        choice(name: 'ACTION', choices: ['apply', 'destroy'], description: 'Choose Terraform action')
+    }
+    stages {
+        stage('Checkout') {
+            steps {
+                git url: 'https://github.com/chaitan28/project-tomcat.git'
+            }
+        }
+        stage('Terraform Init') {
+            steps {
+                sh 'cd infra && terraform init'
+            }
+        }
+        stage('Terraform Plan') {
+            steps {
+                sh 'cd infra && terraform plan'
+            }
+        }
+        stage('Terraform Action') {
+            steps {
+                sh 'cd infra && terraform ${ACTION} -auto-approve'
+            }
+        }
+    }
+}

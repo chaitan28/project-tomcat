@@ -1,7 +1,7 @@
 variable "aws_region" {
   description = "The AWS region to launch instances in"
   type        = string
-  default     = "us-east-2"
+  default     = "ap-south-1"
 }
 
 variable "instance_type" {

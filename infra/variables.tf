@@ -25,7 +25,7 @@ variable "key_name" {
 variable "tomcat_instances" {
   description = "List of environments to create EC2 instances for"
   type        = list(string)
-  default     = ["dev", "qa", "staging", "prod"]
+  default     = ["dev", "qa", "prod"]
 }
 
 

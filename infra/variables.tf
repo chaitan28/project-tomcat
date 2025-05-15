@@ -32,11 +32,11 @@ variable "tomcat_instances" {
 variable "vpc_id" {
   description = "ID of the existing VPC"
   type        = string
-  default     = "vpc-09861d007539d1b62"
+  default     = "vpc-07db7ee9f223651df"
 }
 
 variable "subnet_id" {
   description = "ID of the public subnet in the VPC"
   type        = string
-  default     = "subnet-0fdea6c79a96d0a03"
+  default     = "subnet-02086821d2c4abed0"
 }

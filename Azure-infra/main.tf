@@ -1,3 +1,19 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = ">=2.99"
+    }
+  }
+
+  backend "azurerm" {
+    resource_group_name  = "tomcat-resources"
+    storage_account_name = "tomcatios-231"
+    container_name       = "tomcatioscontainer-321"
+    key                  = "Azure-infra/terraform.tfstate"
+  }
+}
+
 provider "azurerm" {
   features {}
 }
@@ -112,7 +128,7 @@ resource "azurerm_linux_virtual_machine" "tomcat_vm" {
 
   admin_ssh_key {
     username   = "adminuser"
-    public_key = file("~/.ssh/id_rsa.pub")
+    public_key = file("~/.ssh/MySSHKey.pub")
   }
 
   os_disk {

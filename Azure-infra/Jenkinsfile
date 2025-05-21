@@ -16,12 +16,12 @@ pipeline {
         }
         stage('Terraform Plan') {
             steps {
-                sh 'cd infra && terraform plan'
+                sh 'cd Azure-infra && terraform plan'
             }
         }
         stage('Terraform Action') {
             steps {
-                sh 'cd infra && terraform ${ACTION} -auto-approve'
+                sh 'cd Azure-infra && terraform ${ACTION} -auto-approve'
             }
         }
     }

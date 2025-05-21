@@ -7,7 +7,7 @@ sudo apt-get update -y
 sudo apt-get upgrade -y
 
 # Install Java
-sudo apt install openjdk-21-jdk -y
+sudo apt install openjdk-17-jdk -y
 
 # Define variables
 TOMCAT_VERSION="9.0.105"
@@ -30,7 +30,7 @@ After=network.target
 [Service]
 Type=oneshot
 
-Environment=JAVA_HOME=/usr/lib/jvm/java-1.21.0-openjdk-amd64        #make sure this is correct
+Environment=JAVA_HOME=/usr/lib/jvm/java-1.17.0-openjdk-amd64        
 Environment=CATALINA_PID=/opt/tomcat/temp/tomcat.pid
 Environment=CATALINA_HOME=/opt/tomcat
 Environment=CATALINA_BASE=/opt/tomcat

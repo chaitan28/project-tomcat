@@ -85,7 +85,7 @@ resource "azurerm_public_ip" "tomcat_public_ip" {
   name                = "tomcat-public-ip-${count.index}"
   location            = var.azure_region
   resource_group_name = "tomcat-resources"
-  allocation_method   = "Dynamic"
+  allocation_method   = "Static"
 }
 
 # Network Interface

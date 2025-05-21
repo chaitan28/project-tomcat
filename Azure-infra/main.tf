@@ -8,8 +8,8 @@ terraform {
 
   backend "azurerm" {
     resource_group_name  = "tomcat-resources"
-    storage_account_name = "tomcatios-231"
-    container_name       = "tomcatioscontainer-321"
+    storage_account_name = "tomcatios231"
+    container_name       = "tomcatioscontainer"
     key                  = "Azure-infra/terraform.tfstate"
   }
 }

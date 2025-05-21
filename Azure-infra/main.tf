@@ -19,6 +19,11 @@ provider "azurerm" {
   subscription_id = "1d342b09-7474-440d-a4c0-4d42e7768976"
 }
 
+resource "azurerm_resource_group" "tomcat_rg" {
+  name     = "tomcat-resources"
+  location = var.azure_region
+}
+
 # Virtual Network
 resource "azurerm_virtual_network" "tomcat_vnet" {
   name                = "tomcat-vnet"
@@ -30,7 +35,7 @@ resource "azurerm_virtual_network" "tomcat_vnet" {
 # Subnet
 resource "azurerm_subnet" "tomcat_subnet" {
   name                 = "tomcat-subnet"
-  resource_group_name  = "tomcat-resources"
+  resource_group_name  = azurerm_resource_group.tomcat_rg.name
   virtual_network_name = azurerm_virtual_network.tomcat_vnet.name
   address_prefixes     = ["10.0.1.0/24"]
 }
@@ -39,7 +44,7 @@ resource "azurerm_subnet" "tomcat_subnet" {
 resource "azurerm_network_security_group" "tomcat_nsg" {
   name                = "tomcat-nsg"
   location            = azurerm_resource_group.tomcat_rg.location
-  resource_group_name = "tomcat-resources"
+  resource_group_name = azurerm_resource_group.tomcat_rg.name
 
   security_rule {
     name                       = "SSH"
@@ -83,7 +88,7 @@ resource "azurerm_public_ip" "tomcat_public_ip" {
   count               = length(var.tomcat_instances)
   name                = "tomcat-public-ip-${count.index}"
   location            = azurerm_resource_group.tomcat_rg.location
-  resource_group_name = "tomcat-resources"
+  resource_group_name = azurerm_resource_group.tomcat_rg.name
   allocation_method   = "Dynamic"
 }
 
@@ -92,7 +97,7 @@ resource "azurerm_network_interface" "tomcat_nic" {
   count               = length(var.tomcat_instances)
   name                = "tomcat-nic-${count.index}"
   location            = azurerm_resource_group.tomcat_rg.location
-  resource_group_name = "tomcat-resources"
+  resource_group_name = azurerm_resource_group.tomcat_rg.name
 
   ip_configuration {
     name                          = "internal"
@@ -113,7 +118,7 @@ resource "azurerm_network_interface_security_group_association" "example" {
 resource "azurerm_linux_virtual_machine" "tomcat_vm" {
   count               = length(var.tomcat_instances)
   name                = "${var.tomcat_instances[count.index]}-server"
-  resource_group_name = "tomcat-resources"
+  resource_group_name = azurerm_resource_group.tomcat_rg.name
   location            = azurerm_resource_group.tomcat_rg.location
   size                = var.vm_size
   admin_username      = "adminuser"

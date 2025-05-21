@@ -8,7 +8,7 @@ pipeline {
             steps {
                 git url: 'https://github.com/chaitan28/project-tomcat.git'
             }
-        }
+        }     
         stage('Terraform Init') {
             steps {
                 sh 'cd Azure-infra && terraform init'

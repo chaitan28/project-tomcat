@@ -11,7 +11,7 @@ pipeline {
         }
         stage('Terraform Init') {
             steps {
-                sh 'cd infra && terraform init'
+                sh 'cd Azure-infra && terraform init'
             }
         }
         stage('Terraform Plan') {

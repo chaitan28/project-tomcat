@@ -22,11 +22,6 @@ variable "admin_username" {
   default     = "adminuser"
 }
 
-variable "ssh_public_key_path" {
-  description = "Path to the SSH public key"
-  type        = string
-  default     = "~/.ssh/id_rsa.pub"
-}
 
 variable "source_image" {
   description = "Source image for the VM"
